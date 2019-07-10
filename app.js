@@ -6,6 +6,9 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 
 var hospitalRouter = require("./model/hospital/hospital.route");
+var doctorRouter = require("./model/doctor/doctor.route");
+var patientRouter = require('./model/patient/patient.route');
+var staffRouter = require("./model/staff/staff.route");
 
 var app = express();
 
@@ -23,7 +26,11 @@ mongoose.connect('mongodb://localhost/hmis',{ useNewUrlParser: true })
   .then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.log("Not Connected to MongoDB...", err));
 
+ // all routes 
 app.use('/hospital',hospitalRouter);
+app.use('/doctor',doctorRouter);
+app.use('/patient',patientRouter);
+app.use('/staff', staffRouter);
 
 
 app.use("/", (req, res,next) => {

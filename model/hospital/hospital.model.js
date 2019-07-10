@@ -1,8 +1,7 @@
 const Hospital = require("./hospital.schema");
 
 module.exports.add = (req, res, next) => {
-    console.log("Add Hospital");
-    let hospitalData = {
+    let hospitalData = { 
         name: req.body.name,
         address: {
             country: req.body.country,
