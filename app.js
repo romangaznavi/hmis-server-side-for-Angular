@@ -9,6 +9,7 @@ var hospitalRouter = require("./model/hospital/hospital.route");
 var doctorRouter = require("./model/doctor/doctor.route");
 var patientRouter = require('./model/patient/patient.route');
 var staffRouter = require("./model/staff/staff.route");
+var departmentRouter = require('./model/department/department.route');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use('/hospital',hospitalRouter);
 app.use('/doctor',doctorRouter);
 app.use('/patient',patientRouter);
 app.use('/staff', staffRouter);
+app.use('/department', departmentRouter);
 
 
 app.use("/", (req, res,next) => {
