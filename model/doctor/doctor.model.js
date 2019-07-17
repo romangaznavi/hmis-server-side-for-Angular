@@ -1,22 +1,55 @@
 const Doctor = require('./doctor.schema');
+const Hospital = require("../hospital/hospital.schema");
+const Department = require("../department/department.schema");
+module.exports.add = async (req, res, next) => { 
+    try {
+        //get hospital By ID
 
-module.exports.add = (req, res, next) => { 
-    let doctorData = {
-        name: req.body.name,
-        qualification: req.body.qualification,
-        // department: req.body.department,
-        gender: req.body.gender,
-        mobile: req.body.mobile,
-        shifts: { 
-            id: req.body.hospitalID,
-            hospitalName: req.body.hospitalName,
-            shift: req.body.shift
+        let hospital = await getHospitalById(req.body.hospitalId);
+        // console.log(hospital);
+        let department = await getDepartmentById(req.body.departmentId);
+        // console.log(department);
+        let doctorData = {
+            name: req.body.name,
+            qualification: req.body.qualification,
+            department: department.departmentName,
+            gender: req.body.gender,
+            mobile: req.body.mobile,
+            shifts: { 
+                id: req.body.hospitalId,
+                hospitalName: hospital.name,
+                shift: req.body.shift
+            }
         }
+        //console.log(doctorData);
+        Doctor.create(doctorData)
+        .then(result =>res.status(200).json({result}))
+        .catch(error =>res.status(500).json({error}));
+    } catch (error) {
+        res.status(500).json({error});
     }
-    Doctor.create(doctorData)
-    .then(result =>res.status(200).json({result}))
-    .catch(error =>res.status(500).json({error}));
 }
+
+
+async function getHospitalById(hospitalId) {
+    try {
+        const hospital = await  Hospital.findById(hospitalId);    
+        return hospital;
+    } catch (error) {
+      return error;   
+    }
+}
+
+async function getDepartmentById(departmentId) {
+    try {
+        const department = await Department.findById(departmentId);
+        return department;
+    } catch (error) {
+        return(error);
+    }
+}
+
+
 
  module.exports.findAll = (req, res) =>{
      Doctor.find()

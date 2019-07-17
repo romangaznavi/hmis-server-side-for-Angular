@@ -1,30 +1,61 @@
 const Patient = require('./patient.schema');
+const Hospital = require('../hospital/hospital.schema');
+module.exports.add = async (req, res, next) =>{
+    try {
 
-module.exports.add = (req, res, next) =>{
-    let patientData = {
+        let hospital = await getHospitalById(req.body.hospitalId);
+        // console.log(hospital);
+        let doctor = await getDoctorById(req.body.doctorId);
+        if (doctor || !doctor.name) {
+            res.status(500).json({message :"Doctor can not be found"})
+        }
+        console.log(doctor, 'Doctor list')
+        let patientData = {
         name: req.body.name,
         age: req.body.age,
         gender: req.body.gender,
         address: req.body.address,
         mobile: req.body.mobile,
-        blood_group: req.body.blood_group,
+        blood_group: req.body.bloodGroup,
         diagnosis: req.body.diagnosis,
         medicalRecord: {
-            dateOfExamination: req.body.dateOfExamination,
+            dateOfExamination: new Date(),
         },
         hospitalData: {
-            id: req.body.id,
-            hospitalName: req.body.hospitalName  
+            id: hospital._id,
+            hospitalName: hospital.name  
         },
         patientDoctor: {
-            doctorID: req.body.doctorID,
-            doctorName: req.body.doctorName
+            doctorID: req.body.doctorId,
+            doctorName: doctor.name
         }
     }
     Patient.create(patientData)
     .then(result => res.status(200).json({result}))
-    .catch(error => res.status(200).json({error}));
-} 
+    .catch(error => res.status(500).json({error}));
+     
+    } catch (error) {
+        return error;
+    }
+}
+
+async function getHospitalById(hospitalId){
+    try {
+        const hospital = await Hospital.findById(hospitalId);
+        return hospital;
+    } catch (error) {
+        return error;
+    }
+}
+
+ async function getDoctorById(doctorId){
+    try {
+        const doctor = await doctor.findById(doctorId);
+        return doctor;
+    } catch (error) {
+        return new Error(error);
+    }
+}
 
 module.exports.findAll = (req, res) => {
     Patient.find()
