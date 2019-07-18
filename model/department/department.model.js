@@ -16,7 +16,19 @@ module.exports.add = (req, res) => {
 }
 
 module.exports.findAll = (req, res) => {
+    let limit=1;
+    let skip=0;
+    if (req.query && req.query.limit) {
+        limit = req.query.limit;
+    }
+
+    if (req.query && req.query.skip) {
+        skip = req.query.skip;
+    }
+    console.log(skip,'Skip');
     Department.find()
+    .limit(limit)
+    .skip(skip)
     .then(result => res.status(200).send(result))
     .catch(error => res.status(404).send(error))
 }
