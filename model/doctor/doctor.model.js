@@ -20,7 +20,7 @@ module.exports.add = async (req, res, next) => {
                 hospitalName: hospital.name,
                 shift: req.body.shift
             }
-        }
+        } 
         //console.log(doctorData);
         Doctor.create(doctorData)
         .then(result =>res.status(200).json({result}))

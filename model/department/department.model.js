@@ -21,3 +21,13 @@ module.exports.findAll = (req, res) => {
     .catch(error => res.status(404).send(error))
 }
 
+module.exports.countAllDepartments = (req, res, next) =>{
+    
+   Department.countDocuments()
+    .then(result =>{
+        res.status(200).json(result)
+    } )
+    .catch(error => res.status(404).send(error))
+    
+}
+
