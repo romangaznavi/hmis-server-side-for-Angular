@@ -6,6 +6,9 @@
 
 router.get("/list", patientModel.findAll);
 
+
+router.get("/count", patientModel.count);
+
 router.get("/view/:id", patientModel.findOne);
 
 router.put("/update/:id", patientModel.update);

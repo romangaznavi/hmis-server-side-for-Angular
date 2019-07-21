@@ -58,13 +58,31 @@ async function getHospitalById(hospitalId){
 }
 
 module.exports.findAll = (req, res) => {
-    Patient.find()
+    let params = JSON.parse(req.query.filter);
+    let limit = 3;
+    let offset = 0;
+    if(params.offset) {
+       offset = params.offset;     
+    }
+    Patient.find().skip(offset).limit(limit)
     .then(result => res.status(200).send(result))
     .catch(error => res.status(404).send({
         message: "Data not found"
     })); 
 }
 
+module.exports.count = (req, res) => {
+    Patient.countDocuments()
+    .then(result =>{
+         res.status(200).json(result)
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(404).json({
+            message: "Data not found"
+        });
+    }); 
+}
 module.exports.findOne = (req, res) => {
     Patient.findById(req.params.id)
     .then(result => res.status(200).send(result))

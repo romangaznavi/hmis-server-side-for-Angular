@@ -44,6 +44,7 @@ async function getDepartmentById(departmentId) {
     try {
         const department = await Department.findById(departmentId);
         return department;
+
     } catch (error) {
         return(error);
     }
@@ -137,4 +138,13 @@ module.exports.deleteById = (req, res) => {
 
 module.exports.findOne = (req, res) => {
     
+}
+
+
+module.exports.countAllDoctors = (req, res, next) => {
+    Doctor.countDocuments()
+    .then(result => {
+        res.status(200).send(result)
+    })
+    .catch(error => res.status(404).send(error))
 }

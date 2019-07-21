@@ -16,29 +16,24 @@ module.exports.add = (req, res) => {
 }
 
 module.exports.findAll = (req, res) => {
-    let limit=1;
+    let limit=3;
     let skip=0;
-    if (req.query && req.query.limit) {
-        limit = req.query.limit;
+    let params = JSON.parse(req.query.filter);
+    if (params) {
+        skip = params.skip;
     }
-
-    if (req.query && req.query.skip) {
-        skip = req.query.skip;
-    }
-    console.log(skip,'Skip');
-    Department.find()
-    .limit(limit)
-    .skip(skip)
+    Department.find().skip(skip).limit(limit)
     .then(result => res.status(200).send(result))
-    .catch(error => res.status(404).send(error))
+    .catch(error => {
+        res.status(404).send(error);
+    })
 }
 
 module.exports.countAllDepartments = (req, res, next) =>{
-    
    Department.countDocuments()
     .then(result =>{
         res.status(200).json(result)
-    } )
+    })
     .catch(error => res.status(404).send(error))
     
 }

@@ -13,3 +13,5 @@ router.get("/view/:id", doctorModel.findOne);
 router.put("/update/:id", doctorModel.update);
 
 router.delete("/delete/:id", doctorModel.deleteById);
+
+router.get("/total", doctorModel.countAllDoctors);
