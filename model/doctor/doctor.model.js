@@ -30,7 +30,6 @@ module.exports.add = async (req, res, next) => {
     }
 }
 
-
 async function getHospitalById(hospitalId) {
     try {
         const hospital = await  Hospital.findById(hospitalId);    
@@ -44,19 +43,32 @@ async function getDepartmentById(departmentId) {
     try {
         const department = await Department.findById(departmentId);
         return department;
-
     } catch (error) {
         return(error);
     }
 }
 
-
-
  module.exports.findAll = (req, res) =>{
-     Doctor.find()
+    let limit=2;
+    let skip= 0;
+    
+    if(req.query && req.query.skip) {
+        skip = Number(req.query.skip);
+    }
+
+     Doctor.find().skip(skip).limit(limit)
      .then(doctors => res.status(200).json(doctors))
-     .catch(error => res.status(500).json("Could not find doctors data", error));
+     .catch(error => res.status(500).json(error));
  }
+
+ module.exports.countAllDoctors = (req, res, next) => {
+    Doctor.countDocuments()
+    .then(result => res.status(200).json(result))
+    .catch(error => res.status(404).json(error))
+}
+
+
+
 
 module.exports.findOne = (req, res, next) => {
     Doctor.findById(req.params.id)
@@ -141,10 +153,3 @@ module.exports.findOne = (req, res) => {
 }
 
 
-module.exports.countAllDoctors = (req, res, next) => {
-    Doctor.countDocuments()
-    .then(result => {
-        res.status(200).send(result)
-    })
-    .catch(error => res.status(404).send(error))
-}
