@@ -15,10 +15,25 @@ module.exports.add = (req, res, next) => {
 }
 
 module.exports.findAll = (req, res) => {
-    Hospital.find()
+    let skip = 0;
+    let limit = 2;
+    let params = JSON.parse(req.query.filter);
+    if(params){ 
+        skip = params.skip;
+    }
+
+    Hospital.find().skip(skip).limit(limit)
     .then(result => res.status(200).send(result))
     .catch(error => res.status(404).send(error)); 
 }
+
+module.exports.countAllHospitals = (req, res, next) => {
+    Hospital.countDocuments() 
+    .then(result => {
+        res.status(200).json(result)
+    })
+    .catch(error => res.status(400).json(error))
+} 
 
 module.exports.findOne = (req, res) =>{
     Hospital.findById(req.params.id)

@@ -13,6 +13,8 @@ router.put("/update/:id", HospitalModel.update);
 
 router.delete("/delete/:id", HospitalModel.deleteById);
 
+router.get("/count", HospitalModel.countAllHospitals);
+
 
 module.exports = router;
 

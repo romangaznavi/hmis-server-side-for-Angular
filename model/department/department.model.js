@@ -16,7 +16,7 @@ module.exports.add = (req, res) => {
 }
 
 module.exports.findAll = (req, res) => {
-    let limit=3;
+    let limit=1; 
     let skip=0;
     let params = JSON.parse(req.query.filter);
     if (params) {
