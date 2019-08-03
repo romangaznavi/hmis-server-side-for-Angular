@@ -4,7 +4,7 @@
 
  router.post("/add", patientModel.add);
 
-router.get("/list", patientModel.findAll);
+router.get("/list", patientModel.findAll); 
 
 
 router.get("/count", patientModel.count);

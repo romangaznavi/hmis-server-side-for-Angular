@@ -4,7 +4,6 @@ module.exports.add = async (req, res, next) =>{
     try {
 
         let hospital = await getHospitalById(req.body.hospitalId);
-        // console.log(hospital);
         let doctor = await getDoctorById(req.body.doctorId);
         if (doctor || !doctor.name) {
             res.status(500).json({message :"Doctor can not be found"})
