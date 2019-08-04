@@ -5,6 +5,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+const auth = require('./middleware/auth');
 
 const passport = require("passport");
 
@@ -45,11 +46,11 @@ require('./config/passport-local');
 //   .catch(err => console.log("Not Connected to MongoDB...", err));
 
  // all routes 
-app.use('/hospital',hospitalRouter);
-app.use('/doctor',doctorRouter);
-app.use('/patient',patientRouter);
-app.use('/staff', staffRouter);
-app.use('/department', departmentRouter);
+app.use('/hospital' , hospitalRouter);
+app.use('/doctor',auth, doctorRouter);
+app.use('/patient',auth, patientRouter);
+app.use('/staff', auth, staffRouter);
+app.use('/department',auth, departmentRouter);
 app.use('/login', loginRouter);
 
 

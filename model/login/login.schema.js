@@ -31,12 +31,12 @@ userSchema.pre("save", function (next) {
         let hash = crypto.pbkdf2Sync(user.password, "salt", 32, 10, "sha512");
         user.password = hash.toString("hex");
     }
+    const token = jwt.sign({ token: user.accessToken });
     next();
 });
  
 userSchema.methods.validatePassword = function(password) {
     let hashCrypto = crypto.pbkdf2Sync(password, "salt", 32, 10, "sha512");
-    // console.log(hashCrypto, "This is a crypto hashs msage");
     if(this.password) {
         return this.password = hashCrypto.toString("hex");
     }
@@ -45,7 +45,7 @@ userSchema.methods.validatePassword = function(password) {
 
 userSchema.methods.generateJwt = function(){
     let expiry = new Date();
-    expiry.setDate(expiry.getDate()+2);
+    expiry.setDate(expiry.getMinutes()+1);
 
     let payLoadObj = {
         _id: this._id,

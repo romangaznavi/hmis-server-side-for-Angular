@@ -1,3 +1,4 @@
+
 const User = require('./login.schema');
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -16,7 +17,8 @@ module.exports.register = (req, res, next) => {
     .catch(err => res.status(400).json(err));
 }
 
- module.exports.login = (req, res, next) => {
+ module.exports.login =(req, res, next) => {
+     
      passport.authenticate('local', function(err, user, info) {
         if(err) { 
             return res.status(500).send(err);
