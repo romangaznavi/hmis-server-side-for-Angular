@@ -46,7 +46,7 @@ require('./config/passport-local');
 //   .catch(err => console.log("Not Connected to MongoDB...", err));
 
  // all routes 
-app.use('/hospital' , hospitalRouter);
+app.use('/hospital',auth , hospitalRouter);
 app.use('/doctor',auth, doctorRouter);
 app.use('/patient',auth, patientRouter);
 app.use('/staff', auth, staffRouter);

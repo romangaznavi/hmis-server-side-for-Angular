@@ -45,7 +45,7 @@ userSchema.methods.validatePassword = function(password) {
 
 userSchema.methods.generateJwt = function(){
     let expiry = new Date();
-    expiry.setDate(expiry.getMinutes()+1);
+    expiry.setMinutes(expiry.getMinutes()+1);
 
     let payLoadObj = {
         _id: this._id,

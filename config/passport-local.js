@@ -4,7 +4,7 @@ let User = require('../model/login/login.schema');
 passport.use(new localStrategy(
    {
         usernameField: "email",
-   },   
+   },
    function(email, password, done) {
        User.findOne({email: email}, function(err, user){
            if(err) { return done(err); }
