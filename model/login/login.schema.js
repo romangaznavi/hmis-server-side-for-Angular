@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const role = require('../../roles');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -22,7 +23,12 @@ const userSchema = new mongoose.Schema({
         minlength: 4,
         maxlength: 1024
     },
+    role: {
+        type: String,
+        required: true
+    },
     saltSecrete: String
+    
 })
 
 userSchema.pre("save", function (next) {
@@ -31,7 +37,6 @@ userSchema.pre("save", function (next) {
         let hash = crypto.pbkdf2Sync(user.password, "salt", 32, 10, "sha512");
         user.password = hash.toString("hex");
     }
-    const token = jwt.sign({ token: user.accessToken });
     next();
 });
  
@@ -45,11 +50,12 @@ userSchema.methods.validatePassword = function(password) {
 
 userSchema.methods.generateJwt = function(){
     let expiry = new Date();
-    expiry.setMinutes(expiry.getMinutes()+1);
+    expiry.setMinutes(expiry.getMinutes()+30);
 
     let payLoadObj = {
         _id: this._id,
         email: this.email,
+        role: this.role,
         exp: parseInt(expiry.getTime() / 1000)
     };
     return jwt.sign(payLoadObj, "qazwsx");

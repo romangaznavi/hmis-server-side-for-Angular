@@ -8,8 +8,10 @@ module.exports.register = (req, res, next) => {
     const userData = {
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        role: req.body.role
     }
+    // console.log(userData, "***********");
     User.create(userData)
     .then(result => {
         return res.status(200).json(result)

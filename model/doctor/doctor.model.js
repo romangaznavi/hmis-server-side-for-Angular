@@ -1,10 +1,12 @@
 const Doctor = require('./doctor.schema');
 const Hospital = require("../hospital/hospital.schema");
 const Department = require("../department/department.schema");
+const role_permission = require('../../middleware/role_permission');
+
 module.exports.add = async (req, res, next) => { 
     try {
         //get hospital By ID
-
+        // console.log("*******");
         let hospital = await getHospitalById(req.body.hospitalId);
         // console.log(hospital);
         let department = await getDepartmentById(req.body.departmentId);
@@ -51,7 +53,7 @@ async function getDepartmentById(departmentId) {
  module.exports.findAll = (req, res) =>{
     let limit=2;
     let skip= 0;
-    
+
     if(req.query && req.query.skip) {
         skip = Number(req.query.skip);
     }
@@ -66,9 +68,6 @@ async function getDepartmentById(departmentId) {
     .then(result => res.status(200).json(result))
     .catch(error => res.status(404).json(error))
 }
-
-
-
 
 module.exports.findOne = (req, res, next) => {
     Doctor.findById(req.params.id)

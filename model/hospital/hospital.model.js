@@ -1,4 +1,5 @@
 const Hospital = require("./hospital.schema");
+const role_permission = require('../../middleware/role_permission');
 
 module.exports.add = (req, res, next) => {
     let hospitalData = { 
@@ -17,7 +18,10 @@ module.exports.add = (req, res, next) => {
 module.exports.findAll = (req, res) => {
     let skip = 0;
     let limit = 2;
-    let params = JSON.parse(req.query.filter);
+    let params;
+    if(req.query && req.query.filter) {
+        params = JSON.parse(req.query.filter);
+    }
     if(params){ 
         skip = params.skip;
     }

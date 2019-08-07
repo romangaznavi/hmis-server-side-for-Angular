@@ -1,5 +1,7 @@
 const Patient = require('./patient.schema');
 const Hospital = require('../hospital/hospital.schema');
+const role_permission = require('../../middleware/role_permission');
+
 module.exports.add = async (req, res, next) =>{
     try {
 

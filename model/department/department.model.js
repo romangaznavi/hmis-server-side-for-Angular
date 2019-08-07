@@ -1,4 +1,5 @@
 const Department = require('./department.schema');
+const role_permission = require('../../middleware/role_permission');
 
 module.exports.add = (req, res) => {
     let departmentData = {
@@ -18,7 +19,10 @@ module.exports.add = (req, res) => {
 module.exports.findAll = (req, res) => {
     let limit=1; 
     let skip=0;
-    let params = JSON.parse(req.query.filter);
+    let params;
+    if (req.query && req.query.filter) {
+        params = JSON.parse(req.query.filter);
+    }
     if (params) {
         skip = params.skip;
     }
