@@ -57,7 +57,7 @@ app.use('/login', loginRouter);
 
 app.use("/", (req, res,next) => {
   res.status(200).json({message: "My first API using express JS"});
-})
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

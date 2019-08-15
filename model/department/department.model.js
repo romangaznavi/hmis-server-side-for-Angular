@@ -24,7 +24,8 @@ module.exports.findAll = (req, res) => {
         params = JSON.parse(req.query.filter);
     }
     if (params) {
-        skip = params.skip;
+        skip = params.all ? '' : params.skip;
+        limit = params.all ? '' : limit;
     }
     Department.find().skip(skip).limit(limit)
     .then(result => res.status(200).send(result))

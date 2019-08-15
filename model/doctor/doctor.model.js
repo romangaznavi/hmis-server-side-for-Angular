@@ -5,12 +5,8 @@ const role_permission = require('../../middleware/role_permission');
 
 module.exports.add = async (req, res, next) => { 
     try {
-        //get hospital By ID
-        // console.log("*******");
         let hospital = await getHospitalById(req.body.hospitalId);
-        // console.log(hospital);
         let department = await getDepartmentById(req.body.departmentId);
-        // console.log(department);
         let doctorData = {
             name: req.body.name,
             qualification: req.body.qualification,
@@ -22,8 +18,7 @@ module.exports.add = async (req, res, next) => {
                 hospitalName: hospital.name,
                 shift: req.body.shift
             }
-        } 
-        //console.log(doctorData);
+        }
         Doctor.create(doctorData)
         .then(result =>res.status(200).json({result}))
         .catch(error =>res.status(500).json({error}));
@@ -63,20 +58,22 @@ async function getDepartmentById(departmentId) {
      .catch(error => res.status(500).json(error));
  }
 
- module.exports.countAllDoctors = (req, res, next) => {
+ module.exports.countAllDoctors = (req, res) => {
     Doctor.countDocuments()
     .then(result => res.status(200).json(result))
     .catch(error => res.status(404).json(error))
 }
 
-module.exports.findOne = (req, res, next) => {
-    Doctor.findById(req.params.id)
+
+module.exports.getDetails = (req, res )=> {
+    let doctorID = req.params.id;
+    Doctor.findById(doctorID)
     .then(result => res.status(200).json(result))
     .catch(error => res.status(404).json("Couldn't find data with given ID"+ error));
 }
 
-
 module.exports.update = (req, res) =>{
+    console.log(req.body, "Data")
    if(!req.body.name){
        return res.status(404).send({
            message: "Name cannot be empty"

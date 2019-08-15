@@ -8,6 +8,8 @@ module.exports = {
         "/hospital/count",
         "/doctor/list",
         "/doctor/count",
+        "/doctor/add",
+        "/doctor/edit",
         "/patient/list",
         "/patient/count",
         "/department/list",

@@ -23,7 +23,8 @@ module.exports.findAll = (req, res) => {
         params = JSON.parse(req.query.filter);
     }
     if(params){ 
-        skip = params.skip;
+        skip = params.all ? '' : skip;
+        limit = params.all ? '' : limit;
     }
 
     Hospital.find().skip(skip).limit(limit)

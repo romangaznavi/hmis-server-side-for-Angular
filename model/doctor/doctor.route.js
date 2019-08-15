@@ -8,7 +8,7 @@ module.exports = router;
 
 router.get("/list", doctorModel.findAll); // /doctor/list
 
-router.get("/view/:id", doctorModel.findOne);
+router.get("/details/:id", doctorModel.getDetails);
 
 router.put("/update/:id", doctorModel.update);
 
