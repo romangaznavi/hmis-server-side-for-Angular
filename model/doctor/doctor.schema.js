@@ -11,7 +11,14 @@ const doctorSchema = new schema({
         id: {type: mongoose.Schema.Types.ObjectId,  ref: 'Hospital'},
         hospitalName: {type: String, required: true},
         shift: {type: String, required: 'Please enter shift', trim: true}, 
-    }
+    },
+    // shift: {type: string},
+    // hospital: {
+    //     id: ObjectId(),
+    //     name: string,
+    //     logo: string
+    // }
+
 })
 
 module.exports = mongoose.model("Doctor", doctorSchema);
