@@ -65,7 +65,7 @@ async function getDepartmentById(departmentId) {
 }
 
 
-module.exports.getDetails = (req, res )=> {
+module.exports.getDetails = (req, res )=> { 
     let doctorID = req.params.id;
     Doctor.findById(doctorID)
     .then(result => res.status(200).json(result))
@@ -73,7 +73,7 @@ module.exports.getDetails = (req, res )=> {
 }
 
 module.exports.update = (req, res) =>{
-    console.log(req.body, "Data")
+    // console.log(req.body, "Data")
    if(!req.body.name){
        return res.status(404).send({
            message: "Name cannot be empty"

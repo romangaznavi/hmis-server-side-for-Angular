@@ -10,19 +10,12 @@ const role_permission = require('./middleware/role_permission');
 
 const passport = require("passport");
 
-// if(!config.get("jwtPrivateKey")) {
-//   console.error("FATAL ERROR: jwtPrivateKey is not defined");
-//   process.exit(1);
-// }
-
 var hospitalRouter = require("./model/hospital/hospital.route");
 var doctorRouter = require("./model/doctor/doctor.route");
 var patientRouter = require('./model/patient/patient.route');
 var staffRouter = require("./model/staff/staff.route");
 var departmentRouter = require('./model/department/department.route');
 var loginRouter = require('./model/login/login.route');
-
-
 
 var app = express();
 
@@ -40,11 +33,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 require('./database/database-config');
 require('./config/passport-local');
-
-
-// mongoose.connect('mongodb://localhost/hmis',{ useNewUrlParser: true })
-//   .then(() => console.log('Connected to MongoDB...'))
-//   .catch(err => console.log("Not Connected to MongoDB...", err));
 
  // all routes 
 app.use('/hospital',auth ,role_permission, hospitalRouter);
